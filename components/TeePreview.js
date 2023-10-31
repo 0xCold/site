@@ -18,7 +18,7 @@ function TeePreview(props) {
   const [isFocused, setIsFocused] = useState(false);
   const teeImage = `images/tees/${props.tee.key}.png`;
   const focusedTeeImage = `images/tees/${props.tee.key}-focused.png`;
-  const teeUrl = `https://7uibmjteuxx1buej-59451834412.shopifypreview.com/products/${props.tee.key}`;
+  const teeUrl = `https://653f3e-3.myshopify.com/products/${props.tee.key}`;
   const animation = useSpring({
     opacity: props.isVisible ? 1 : 0,
     transform: props.isVisible ? 'translateY(0)' : 'translateY(50px)',

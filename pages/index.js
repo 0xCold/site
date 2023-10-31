@@ -5,14 +5,14 @@ import TeePreviewWithObserver from '../components/TeePreview';
 const MAX_LOGO_ZOOM = 20.0;
 const LOGO_ZOOM_INCREMENT = 0.75;
 const ALL_TEES = [
-  { key: "breakpoint-goosebumps-tee", name: "Goosebumps" },
-  { key: "chew-more-glass-tee", name: "Chew More Glass" },
-  { key: "breakpoint-strange-amsterdam-tee", name: "Stranger Things" },
-  { key: "hold-me-closer-fire-dancer-tee", name: "Firedancer" },
-  { key: "sol-brothers-tee", name: "SOL Brothers" },
-  { key: "raj-tee", name: "Raj" },
-  { key: "sol-shop-tee", name: "Shopify" },
-  { key: "toly-tee", name: "Toly" },
+  { key: "breakpoint-goosebumps-tee", name: "Breakpoint Goosebumps Tee" },
+  { key: "chew-more-glass-tee", name: "Chew More Glass Tee" },
+  { key: "breakpoint-strange-amsterdam-tee", name: "Breakpoint Strange Amsterdam Tee" },
+  { key: "hold-me-closer-fire-dancer-tee", name: "Hold Me Closer Firedancer Tee" },
+  { key: "sol-brothers-tee", name: "SOL Brothers Tee" },
+  { key: "raj-tee", name: "Raj Tee" },
+  { key: "sol-shop-tee", name: "SOL Shop Tee" },
+  { key: "toly-tee", name: "Toly Tee" },
 ];
 
 export default function Home() {
