@@ -6,9 +6,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@shopify/shopify-api": "^8.0.2",
+    "autoprefixer": "^10.4.16",
     "next": "latest",
+    "postcss": "^8.4.31",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-intersection-observer": "^9.5.2",
+    "react-spring": "^9.7.3",
+    "tailwindcss": "^3.3.5"
   },
   "engines": {
     "node": ">=18"
