@@ -1,131 +1,100 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import { useEffect, useState } from 'react';
+import TeePreviewWithObserver from '../components/TeePreview';
+
+const MAX_LOGO_ZOOM = 20.0;
+const LOGO_ZOOM_INCREMENT = 0.75;
+const ALL_TEES = [
+  { key: "breakpoint-goosebumps-tee", name: "Goosebumps" },
+  { key: "chew-more-glass-tee", name: "Chew More Glass" },
+  { key: "breakpoint-strange-amsterdam-tee", name: "Stranger Things" },
+  { key: "hold-me-closer-fire-dancer-tee", name: "Firedancer" },
+  { key: "sol-brothers-tee", name: "SOL Brothers" },
+  { key: "raj-tee", name: "Raj" },
+  { key: "sol-shop-tee", name: "Shopify" },
+  { key: "toly-tee", name: "Toly" },
+];
 
 export default function Home() {
+  const [logoVisible, setLogoVisible] = useState(false);
+  const [imageSizePercentage, setImageSizePercentage] = useState(1.0);
+
+  const zoomedWidth = 25 * imageSizePercentage;
+  const zoomedHeight = 6.25 * imageSizePercentage;
+  const isFullyZoomed = imageSizePercentage === MAX_LOGO_ZOOM;
+  
+  useEffect(() => {
+    const handleScroll = () => setLogoVisible(prev => {
+      if (prev) {
+        setImageSizePercentage(prev => Math.min(prev + LOGO_ZOOM_INCREMENT, MAX_LOGO_ZOOM));
+      }
+      return true;
+    });
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('wheel', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>The Candy Machine</title>
+        <link rel="shortcut icon" href="/favicon/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png"/>
       </Head>
-
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      { logoVisible ?
+        (<div className='absolute w-full h-full items-center justify-center flex'>
+          <img src="images/logo-transparent.png" width={zoomedWidth} height={zoomedHeight} /> 
+        </div>) :      
+        (<div className='animate-custombounce text-white text-2xl absolute w-full items-center text-center justify-center flex bottom-10 font-bold'>
+          <span>&#8595;&#8595;&#8595;</span>
+        </div>)
+      }
+      <div className='min-h-screen flex flex-col items-center justify-center relative'>
+        <video
+          loop={true}
+          muted={true}
+          autoPlay={true}
+          playsInline={true}
+          className='w-screen h-screen -z-20 object-cover block md:hidden'
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family:
-            Menlo,
-            Monaco,
-            Lucida Console,
-            Liberation Mono,
-            DejaVu Sans Mono,
-            Bitstream Vera Sans Mono,
-            Courier New,
-            monospace;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            Segoe UI,
-            Roboto,
-            Oxygen,
-            Ubuntu,
-            Cantarell,
-            Fira Sans,
-            Droid Sans,
-            Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
+          <source src="videos/splash-mobile.mp4" type='video/mp4' />
+        </video>
+        <video
+          loop={true}
+          muted={true}
+          autoPlay={true}
+          playsInline={true}
+          className='w-screen h-screen -z-20 object-cover hidden md:block'
+        >
+          <source src="videos/splash.mp4" type='video/mp4' />
+        </video>
+      </div>
+      { isFullyZoomed &&
+        (<div>
+          <div className='text-center sm:container sm:mx-auto'>
+            <h1 className='font-bold text-3xl py-3'>Breakpoint 2023 Collection</h1>
+            <div className='grid grid-cols-2 md:grid-cols-4 px-4'>
+                { ALL_TEES.map(tee => <TeePreviewWithObserver key={tee.key} tee={tee} />) }
+            </div>
+          </div>
+          <div className='text-sm mt-4 w-full flex flex-row text-black justify-center bg-[length:400%_400%] bg-gradient-to-r from-candy-blue via-candy-orange to-candy-green animate-animgradient text-white text-center'>
+            <a 
+              href="https://twitter.com/TheCandyMachine"
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="cursor-pointer" 
+            > 
+              <img src="images/logo-outline.png" width={150} height={150} /> 
+            </a>
+          </div>
+        </div>)
+      }
     </div>
   );
 }
